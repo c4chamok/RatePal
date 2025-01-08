@@ -118,7 +118,7 @@ cd ratepal
    ```
 5. Start the server:
    ```bash
-   npm start
+   npm run server
    ```
 
 ---
