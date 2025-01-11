@@ -10,16 +10,17 @@ const AllServices = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState('All');
+    const [sort , setSort] = useState("")
     const {searchText, setSearchText} = useContext(AuthContext)
     document.title = "RatePal | All Services";
     const [categories,setCategories] = useState([])
-    console.log(searchText);
+    console.log(sort.split(":"));
 
     useEffect(() => {
         const fetchServices = async () => {
             try {
                 const response = await axios.get(`https://rate-pal-server.vercel.app/services?searchText=${searchText ?
-                    searchText : ''}&category=${selectedCategory === 'All' ? '' : selectedCategory}`);
+                    searchText : ''}&category=${selectedCategory === 'All' ? '' : selectedCategory}&sortby=${sort.split(":")[0]}&order=${sort.split(":")[1]}`);
                 setServices(response.data.services);
                 setCategories(['All',...response.data.categories]);
             } catch (err) {
@@ -30,7 +31,7 @@ const AllServices = () => {
         };
 
         fetchServices();
-    }, [searchText, selectedCategory]);
+    }, [searchText, selectedCategory,sort]);
 
     if (loading) return (
         <div className='flex justify-center w-full min-h-screen'>
@@ -46,7 +47,18 @@ const AllServices = () => {
                     Browse through our wide range of services. Select a category to filter.
                 </p>
             </div>
-            <div className="w-[89%] flex justify-end mt-6">
+            <div className="w-[89%] flex justify-between mt-6">
+                <select
+                    value={sort}
+                    onChange={(e)=>setSort(e.target.value)}
+                    className="bg-white border border-gray-300 rounded-lg shadow-sm px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >   
+                    <option value="" disabled>Sort ...</option>
+                    <option value="rating:-1">sort by rating (H to L)</option>
+                    <option value="rating:1">sort by rating (L to H)</option>
+                    <option value="price:-1">sort by price (H to L)</option>
+                    <option value="price:1">sort by price (L to H)</option>
+                </select>
                 <select
                     value={selectedCategory}
                     onChange={(e) => {

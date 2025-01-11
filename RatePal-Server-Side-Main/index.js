@@ -97,17 +97,22 @@ async function run() {
         });
 
         app.get('/services', async (req, res) => {
-            const { searchText, category } = req.query;
+            const { searchText, category, sortby, order } = req.query;
             const query = searchText ? {
                 $or: [
                     { title: { $regex: searchText, $options: 'i' } },
                     { category: { $regex: searchText, $options: 'i' } },
                     { companyName: { $regex: searchText, $options: 'i' } },
                 ]
-            } :
-                category ? { category: category }
-                    : {};
-            const service = await services.find(query).toArray();
+            } 
+            :category ? { category: category }
+            : {};
+            const options = (sortby && order)? {
+                sort: sortby === "rating"? { "rating.averageRating": order } 
+                : sortby === "price" ?{ "price" : order}
+                : {}
+            } : {}
+            const service = await services.find(query, options).toArray();
             const categories = await services.distinct('category');
             res.send({services:service,categories});
         })
