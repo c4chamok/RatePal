@@ -8,9 +8,11 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import mobileRating from '../../assets/Animation - 1735113129067.json'
 import Lottie from "lottie-react";
 import { div } from "motion/react-client";
+import { Link, useNavigate } from "react-router";
 
 
 const Banner = () => {
+    const navigate = useNavigate()
     return (
         <div className="h-[500px]">
             <div className="absolute top-0 z-0 w-full">
@@ -73,6 +75,7 @@ const Banner = () => {
                                         Your trusted platform for genuine reviews and ratings.
                                     </p>
                                     <button
+                                        onClick={()=>navigate("/myservices")}
                                         className="mt-6 px-6 py-3 hover:scale-110 bg-white text-blue-600 rounded-lg shadow-md hover:bg-blue-100  transition duration-300"
                                     >
                                         Get Started
@@ -91,7 +94,8 @@ const Banner = () => {
                                     Explore top-rated services and share your experience with the world.
                                     Join thousands of users on <span className="text-indigo-600">RatePal</span>.
                                 </p>
-                                <a
+                                <a  
+                                    onClick={()=>navigate("/myreviews")}
                                     className="inline-block mt-6 bg-indigo-600 text-white px-6 py-3 rounded-md text-lg font-medium hover:bg-indigo-700 transition"
                                 >
                                     Start Rating Now
@@ -131,6 +135,7 @@ const Banner = () => {
                                         Explore ratings, reviews, and insights to make confident decisions.
                                     </p>
                                     <button
+                                        onClick={()=>navigate("/allservices")}
                                         className="mt-6 px-8 py-3 bg-white text-purple-700 rounded-lg shadow-lg hover:scale-110 hover:text-[#4C51BF] hover:bg-purple-200 transition duration-300"
                                     >
                                         Explore Now

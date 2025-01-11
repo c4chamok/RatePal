@@ -5,7 +5,7 @@ import FeaturedCard from './FeaturedCard';
 const FeaturedServices = () => {
     const services = useLoaderData();
     return (
-        <div className="mt-7 flex flex-col items-center">
+        <div id='featured-services' className="mt-7 flex flex-col items-center">
             <div className="w-[90%] text-center">
                 <h1 className="text-4xl font-bold text-gray-800">Featured Services</h1>
                 <p className="text-lg text-gray-600 mt-2">
