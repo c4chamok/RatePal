@@ -23,14 +23,8 @@ const AuthProvider = ({ children }) => {
             .then((result) => {
                 const additionalInfo = getAdditionalUserInfo(result)
                 console.log(result, additionalInfo)
-                if (additionalInfo.isNewUser) {
-                    axios.post('https://rate-pal-server.vercel.app/users', {
-                        email: user.email,
-                        name: user.displayName,
-                        photo: user.photoURL
-                    }).then((res) => {
-                        console.log(res)
-                    })
+                if (additionalInfo.isNewUser) { 
+                    setIsNew(true);
                 }
             })
     }
@@ -54,9 +48,9 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         if (isNew && user?.photoURL) {
             axios.post('https://rate-pal-server.vercel.app/users', {
-                email: user.email,
-                name: user.displayName,
-                photo: user.photoURL
+                email: user?.email,
+                name: user?.displayName,
+                photo: user?.photoURL
             }).then((res) => {
                 console.log(res)
                 setIsNew(false)

@@ -21,6 +21,7 @@ const MyReviews = () => {
             setReviews(response.data);
         } catch (err) {
             if( err.response.status === 403){
+                console.log(err);
                 return logout()
             }
         }

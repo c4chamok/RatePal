@@ -14,7 +14,7 @@ const Register = () => {
     const navigate = useNavigate()
     document.title = "RatePal | Register"
 
-    const userRegisterHandle = (e) => {
+    const userRegisterHandle = async (e) => {
         e.preventDefault();
         const form = e.target;
         const userName = form.name.value;
@@ -33,20 +33,20 @@ const Register = () => {
         }
         else {
             setPasswordError('')
-            register(email, password)
-                .then(() => {
-                    updateUserProfile({
-                        displayName: userName,
-                        photoURL: imgUrl
-                    })
-                    .then(()=>navigate(from))
-                })
-                .catch((err)=> {
-                    toast.error(`Error : ${err}`  , {
+            try {
+                await register(email, password);
+                await updateUserProfile({
+                    displayName: userName,
+                    photoURL: imgUrl,
+                });
+                toast.success("Registration successful!");
+                navigate(from);
+            } catch (err) {
+                toast.error(`Error: ${err.message}`, {
                     position: "top-right",
                     autoClose: 2000,
-                    })
-                })
+                });
+            }
         }
 
     }
